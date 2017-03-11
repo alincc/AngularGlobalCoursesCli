@@ -1,4 +1,4 @@
-<div #description class="description" [style.height]="blockHeight">
+<div #descriptionContainer class="description" [@expanded]="expanded" (@expanded.done)="checkOverflow()">
     <ng-content></ng-content>
-    <span  (click)="triggerExpand()" class="expand-description">see {{expanded ? 'less' : 'more' }}</span>
+    <span *ngIf="expanded || hasOverflow" (click)="triggerExpand()" class="expand-description">see {{expanded ? 'less' : 'more' }}</span>
 </div>

@@ -1,42 +1,46 @@
 import {
-  Component, OnInit, ElementRef, ChangeDetectorRef,
-  AfterContentChecked, ViewChild
+  Component, OnInit, trigger, state, transition, style, animate, ViewChild, ElementRef, AfterContentInit,
 } from '@angular/core';
 
 @Component({
   selector: 'agc-course-description',
   templateUrl: './course-description.component.html',
-  styleUrls: ['./course-description.component.scss']
+  styleUrls: ['./course-description.component.scss'],
+  animations: [
+    trigger('expanded', [
+      state('false', style({height: '2.5em'})),
+      state('true', style({height: '*'})),
+      transition('1 <=> 0', animate('300ms ease-out'))
+    ])
+  ]
 })
-export class CourseDescriptionComponent implements OnInit, AfterContentChecked {
+export class CourseDescriptionComponent implements OnInit, AfterContentInit {
 
-  public hasOverflow = false;
+  public hasOverflow: boolean = null;
   public expanded = false;
 
-  public blockHeight = '2.5em';
+  @ViewChild('descriptionContainer')
+  descriptionBlock: ElementRef;
 
-  @ViewChild('description') descriptionBlock: ElementRef;
-
-  constructor(private cdRef: ChangeDetectorRef) {
+  constructor() {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  ngAfterContentChecked(): void {
-    this.hasOverflow = this.descriptionBlock.nativeElement.offsetHeight < this.descriptionBlock.nativeElement.scrollHeight;
-    this.cdRef.detectChanges();
+  ngAfterContentInit(): void {
+    this.checkOverflow();
   }
 
   public triggerExpand() {
-    if (this.expanded) {
-      this.blockHeight = '2.5em';
-    } else {
-      this.blockHeight = this.descriptionBlock.nativeElement.scrollHeight + 'px';
-    }
-    setTimeout(() => this.hasOverflow = true, 100);
-
-
     this.expanded = !this.expanded;
   }
+
+  public checkOverflow() {
+    if (!this.hasOverflow) {
+      this.hasOverflow = this.descriptionBlock.nativeElement.offsetHeight < this.descriptionBlock.nativeElement.scrollHeight;
+    }
+  }
+
 
 }

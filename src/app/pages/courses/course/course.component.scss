@@ -6,26 +6,34 @@
   justify-content: space-between;
 
   .info {
-    flex-grow: 1;
-
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+    flex-direction: column;
 
-    .title {
-      width: 10em;
-      margin: 0.2em 0.2em;
-      vertical-align: middle;
+    .header {
+
+      display: flex;
+      //flex-wrap: wrap;
+      align-items: baseline;
+
+      .title {
+        width: 10em;
+        margin: 0.2em 0.2em;
+        vertical-align: middle;
+      }
+
+      .duration {
+        margin: 0.2em 0.2em;
+      }
+
+      .publish-date {
+        margin: 0.2em 0.2em 0.2em auto;
+
+      }
+
     }
 
-    .duration {
-      margin: 0.2em 0.2em;
+    .description {
+      margin-top: 0.5em;
     }
-
-    .publish-date {
-      margin: 0.2em  0.2em  0.2em auto;
-
-    }
-
   }
 }
