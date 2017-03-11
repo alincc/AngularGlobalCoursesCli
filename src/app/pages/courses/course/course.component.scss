@@ -1,0 +1,31 @@
+@import "../../../../assets/styles/variables";
+
+:host {
+  @include plate;
+  display: flex;
+  justify-content: space-between;
+
+  .info {
+    flex-grow: 1;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    .title {
+      width: 10em;
+      margin: 0.2em 0.2em;
+      vertical-align: middle;
+    }
+
+    .duration {
+      margin: 0.2em 0.2em;
+    }
+
+    .publish-date {
+      margin: 0.2em  0.2em  0.2em auto;
+
+    }
+
+  }
+}

@@ -1,3 +1,10 @@
-<p>
-  course works!
-</p>
+<div class="info">
+    <h3 class="title">{{course.name}}</h3>
+    <h5 class="duration">{{course.duration}} min.</h5>
+    <h6 class="publish-date">{{course.publishDate | date}}</h6>
+    <agc-course-description>
+        {{course.description}}
+    </agc-course-description>
+
+</div>
+<agc-course-actions (deleteCourse)="onCourseDelete(course.id)"></agc-course-actions>

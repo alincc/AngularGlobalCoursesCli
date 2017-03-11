@@ -1,0 +1,29 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/controls/button";
+
+:host {
+  @include plate;
+  display: flex;
+  justify-content: space-between;
+
+  .search-btn {
+    @include button;
+
+  }
+
+  .add-course-btn {
+    @include button;
+    margin-left: auto;
+  }
+
+  .search-field {
+    border: none;
+    border-bottom: solid $secondary-text-color;
+    outline: none;
+
+    &:focus {
+      border-bottom-color: $primary-color;
+    }
+  }
+
+}

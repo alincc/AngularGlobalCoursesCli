@@ -1,0 +1,4 @@
+<div #description class="description" [style.height]="blockHeight">
+    <ng-content></ng-content>
+    <span  (click)="triggerExpand()" class="expand-description">see {{expanded ? 'less' : 'more' }}</span>
+</div>

@@ -1,0 +1,12 @@
+@import "../../../../../assets/styles/controls/button";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  .edit-course-btn, .delete-course-btn {
+    @include button;
+    margin-bottom: 0.4em;
+  }
+}

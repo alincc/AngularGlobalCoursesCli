@@ -1,0 +1,25 @@
+@import "../variables";
+
+@mixin button {
+  font-size: 1.2rem;
+  margin-left: 0.6em;
+  border-width: 0;
+  border-radius: 0.125em;
+  background-color: $primary-color-text;
+  box-shadow: $shadow;
+  padding: 0 0.5em;
+  height: 1.8em;
+  color: $secondary-text-color;
+  outline: none;
+  transition: box-shadow 100ms linear;
+
+
+  &:hover {
+    box-shadow: $active-shadow;
+  }
+
+  &:active {
+    box-shadow: $shadow;
+  }
+
+}

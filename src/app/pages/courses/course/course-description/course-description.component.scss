@@ -1,0 +1,26 @@
+@import "../../../../../assets/styles/variables";
+
+:host {
+  width: 100%;
+
+  .description {
+
+    width: 100%;
+    line-height: 1.25;
+    //height: 2.5em;
+    overflow: hidden;
+    position: relative;
+    transition: height 150ms linear;
+
+    .expand-description {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: white;
+      box-shadow: -1em 0 1em 0.1em white;
+      cursor: pointer;
+      color: $accent-color;
+    }
+
+  }
+}
