@@ -1,4 +1,7 @@
-<div #descriptionContainer class="description" [@expanded]="expanded" (@expanded.done)="checkOverflow()">
+<div #descriptionContainer
+     class="description"
+     [@expanded]="expanded"
+     (mouseenter)="expand()"
+     (mouseleave)="collapse()">
     <ng-content></ng-content>
-    <span *ngIf="expanded || hasOverflow" (click)="triggerExpand()" class="expand-description">see {{expanded ? 'less' : 'more' }}</span>
 </div>

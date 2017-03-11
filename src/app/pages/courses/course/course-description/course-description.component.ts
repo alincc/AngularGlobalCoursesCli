@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, trigger, state, transition, style, animate, ViewChild, ElementRef, AfterContentInit,
+  Component, OnInit, trigger, state, transition, style, animate
 } from '@angular/core';
 
 @Component({
@@ -14,13 +14,9 @@ import {
     ])
   ]
 })
-export class CourseDescriptionComponent implements OnInit, AfterContentInit {
+export class CourseDescriptionComponent implements OnInit {
 
-  public hasOverflow: boolean = null;
   public expanded = false;
-
-  @ViewChild('descriptionContainer')
-  descriptionBlock: ElementRef;
 
   constructor() {
   }
@@ -28,19 +24,11 @@ export class CourseDescriptionComponent implements OnInit, AfterContentInit {
   ngOnInit() {
   }
 
-  ngAfterContentInit(): void {
-    this.checkOverflow();
+  public expand() {
+    this.expanded = true;
   }
 
-  public triggerExpand() {
-    this.expanded = !this.expanded;
+  public collapse() {
+    this.expanded = false;
   }
-
-  public checkOverflow() {
-    if (!this.hasOverflow) {
-      this.hasOverflow = this.descriptionBlock.nativeElement.offsetHeight < this.descriptionBlock.nativeElement.scrollHeight;
-    }
-  }
-
-
 }
