@@ -1,3 +1,7 @@
-<p>
-  login works!
-</p>
+<div (keydown.enter)="login()">
+    <label for="username">Login</label>
+    <input id="username" type="text" [(ngModel)]="username">
+    <label for="password">Password</label>
+    <input id="password" type="password" [(ngModel)]="password">
+</div>
+<button (click)="login()">Enter</button>

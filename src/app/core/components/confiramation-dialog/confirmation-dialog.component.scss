@@ -1,0 +1,13 @@
+@import "../../../../assets/styles/controls/button";
+
+[md-dialog-title] {
+  text-align: center;
+}
+
+[md-dialog-actions] {
+  justify-content: space-around;
+}
+
+button {
+  @include button
+}

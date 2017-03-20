@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthorizationService} from '../../../services/authorization.service';
 
 @Component({
   selector: 'agc-auth-panel',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthorizationService) {
+  }
 
   ngOnInit() {
   }
 
+  public logOut() {
+    console.log(this.authService.getUserInfo());
+    this.authService.logout();
+  }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthorizationService} from '../../core/services/authorization.service';
 
 @Component({
   selector: 'agc-login',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public username: string;
+  public password: string;
+
+  constructor(private authService: AuthorizationService) {
+  }
 
   ngOnInit() {
+  }
+
+  public login() {
+    this.authService.login(this.username);
   }
 
 }
