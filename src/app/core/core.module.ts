@@ -10,6 +10,8 @@ import {LogoComponent} from './components/header/logo/logo.component';
 import {NavigationComponent} from './components/header/navigation/navigation.component';
 import {AuthPanelComponent} from './components/header/auth-panel/auth-panel.component';
 import 'hammerjs';
+import { LoaderBlockComponent } from './components/loader-block/loader-block.component';
+import {LoaderBlockService} from './components/loader-block/loader-block.service';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import 'hammerjs';
     MaterialModule
   ],
   providers: [
-    AuthorizationService
+    AuthorizationService,
+    LoaderBlockService
   ],
   declarations: [
     HeaderComponent,
@@ -27,6 +30,7 @@ import 'hammerjs';
     NavigationComponent,
     AuthPanelComponent,
     ConfirmationDialogComponent,
+    LoaderBlockComponent,
   ],
   entryComponents: [
     ConfirmationDialogComponent
@@ -34,6 +38,7 @@ import 'hammerjs';
   exports: [
     HeaderComponent,
     FooterComponent,
+    LoaderBlockComponent,
   ]
 
 })

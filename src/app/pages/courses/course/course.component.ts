@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Course} from '../../../core/entities/Course';
 import {CoursesService} from '../courses.service';
 import {MdDialog} from '@angular/material';
@@ -7,7 +7,8 @@ import {ConfirmationDialogComponent} from '../../../core/components/confiramatio
 @Component({
   selector: 'agc-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  styleUrls: ['./course.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseComponent implements OnInit {
 

@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../../core/services/authorization.service';
 
 @Component({
   selector: 'agc-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
 
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.authService.login(this.username);
+    this.authService.logIn(this.username);
   }
 
 }

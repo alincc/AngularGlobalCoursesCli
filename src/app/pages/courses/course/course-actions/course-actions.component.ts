@@ -1,9 +1,10 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'agc-course-actions',
   templateUrl: './course-actions.component.html',
-  styleUrls: ['./course-actions.component.scss']
+  styleUrls: ['./course-actions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseActionsComponent implements OnInit {
 

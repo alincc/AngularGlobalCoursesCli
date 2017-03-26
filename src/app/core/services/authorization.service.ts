@@ -1,30 +1,40 @@
 import {Injectable} from '@angular/core';
-import {LocalStorage} from 'ng2-webstorage';
-
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {LoaderBlockService} from '../components/loader-block/loader-block.service';
 
 @Injectable()
 export class AuthorizationService {
 
-  @LocalStorage()
-  private user: string;
+  private user = new BehaviorSubject<string>('');
 
-  constructor() {
+  constructor(private loaderBlockService: LoaderBlockService) {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user.next(user);
+    }
   }
 
-  public login(user) {
-    this.user = user;
+  logIn(user: string) {
+    this.loaderBlockService.show();
+    localStorage.setItem('user', user);
+    this.user.next(user);
+
+    setTimeout(() => {
+      this.loaderBlockService.hide();
+    }, 1000);
   }
 
-  public logout() {
-    this.user = null;
+  logOut() {
+    localStorage.removeItem('user');
+    this.user.next('');
   }
 
   public isAuthenticated() {
-    return !!this.user;
+    return this.user.asObservable();
   }
 
   public getUserInfo() {
-    return this.user;
+    return this.user.asObservable();
   }
 
 

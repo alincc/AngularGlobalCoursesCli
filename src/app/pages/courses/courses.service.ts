@@ -1,67 +1,56 @@
 import {Injectable} from '@angular/core';
 import {Course} from '../../core/entities/Course';
 
+
 import {uniqueId, find, findIndex, pullAllBy} from 'lodash';
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {mockCourses} from '../../core/mock/courses';
+import {LoaderBlockService} from '../../core/components/loader-block/loader-block.service';
 
 
 @Injectable()
 export class CoursesService {
 
-  private courses: Course[] = [
-    {
-      id: uniqueId(),
-      name: 'Video course 1',
-      description: `The particle is more klingon now than transformator. 
-                    boldly and mechanically cold. Diatria cadunts, tanquam teres cannabis. 
-                    Mash a handfull tunas, chocolate, and dill in a large frying pan over medium heat, 
-                    roast for a dozen minutes and enamel with some bagel.`,
-      publishDate: new Date(),
-      duration: 365
-    },
-    {
-      id: uniqueId(),
-      name: 'Video course 2',
-      description: 'Ah, mark me pirate, ye weird sea!',
-      publishDate: new Date(),
-      duration: 365
-    },
-    {
-      id: uniqueId(),
-      name: 'Video course 3',
-      description: 'Jolly roger, hoist me biscuit eater, ye evil wench!',
-      publishDate: new Date(),
-      duration: 365
-    },
-    {
-      id: uniqueId(),
-      name: 'Video course 4',
-      description: 'The lagoon rises love like a stormy reef.',
-      publishDate: new Date(),
-      duration: 365
-    },
-  ];
+  private _courses: BehaviorSubject<Course[]> = new BehaviorSubject(mockCourses);
 
-  public getCourses(): Course[] {
+  public courses: Observable<Course[]> = this._courses.asObservable();
+
+  constructor(private loaderBlockService: LoaderBlockService) {
+
+  }
+
+  public getCourses(): Observable<Course[]> {
     return this.courses;
   }
 
-  public createCourse(course: Course): Course[] {
+  public createCourse(course: Course): void {
+    const courses = this._courses.getValue();
     course.id = uniqueId();
-    this.courses.push(course);
-    return this.courses;
+    courses.push(course);
+    this._courses.next(courses);
   }
 
-  public getCourse(courseId: string): Course {
-    return find(this.courses, {id: courseId});
+  public getCourse(courseId: string) {
+    const courses = this._courses.getValue();
+    return find(courses, {id: courseId});
   }
 
   public updateCourse(course: Course) {
-    const index = findIndex(this.courses, {id: course.id});
-    this.courses[index] = course;
+    const courses = this._courses.getValue();
+    const index = findIndex(courses, {id: course.id});
+    courses[index] = course;
+    this._courses.next(courses);
   }
 
-  public removeCourse(courseId: number) {
-    pullAllBy(this.courses, [{id: courseId}], 'id');
-    return this.courses;
+  public removeCourse(courseId: number): void {
+    this.loaderBlockService.show();
+    const courses = this._courses.getValue();
+    pullAllBy(courses, [{id: courseId}], 'id');
+
+    setTimeout(() => {
+      this._courses.next(courses);
+      this.loaderBlockService.hide();
+    }, 1000);
   }
 }
