@@ -9,7 +9,7 @@ import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy} from '
 export class CourseActionsComponent implements OnInit {
 
   @Output()
-  deleteCourse = new EventEmitter<any>();
+  deleteCourse = new EventEmitter<void>();
 
   constructor() { }
 

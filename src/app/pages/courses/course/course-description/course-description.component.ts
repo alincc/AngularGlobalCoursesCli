@@ -1,6 +1,7 @@
 import {
-  Component, OnInit, trigger, state, transition, style, animate, ChangeDetectionStrategy
+  Component, OnInit, ChangeDetectionStrategy, ViewChild, Renderer2, ElementRef, AfterViewChecked,
 } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'agc-course-description',
@@ -9,27 +10,36 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('expanded', [
-      state('false', style({height: '2.5em'})),
-      state('true', style({height: '*'})),
-      transition('1 <=> 0', animate('300ms ease-out'))
+      state('collapsed', style({height: '2.5em'})),
+      state('expanded', style({height: '*'})),
+      transition('* <=> *', animate('300ms ease-out'))
     ])
   ]
 })
-export class CourseDescriptionComponent implements OnInit {
+export class CourseDescriptionComponent implements OnInit, AfterViewChecked {
 
-  public expanded = false;
+  @ViewChild('descriptionContainer')
+  private cont: ElementRef;
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
+  }
+
+  ngAfterViewChecked() {
+
+    if (40 < this.cont.nativeElement.scrollHeight) {
+      this.renderer.listen(this.cont.nativeElement, 'mouseenter', () => this.expand());
+      this.renderer.listen(this.cont.nativeElement, 'mouseleave', () => this.collapse());
+    }
   }
 
   ngOnInit() {
   }
 
   public expand() {
-    this.expanded = true;
+    this.renderer.setProperty(this.cont.nativeElement, '@expanded', 'expanded');
   }
 
   public collapse() {
-    this.expanded = false;
+    this.renderer.setProperty(this.cont.nativeElement, '@expanded', 'collapsed');
   }
 }

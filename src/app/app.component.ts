@@ -1,10 +1,10 @@
-import {Component, NgZone} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgZone} from '@angular/core';
 
 @Component({
   selector: 'agc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
 
@@ -18,7 +18,6 @@ export class AppComponent {
     });
 
     ngZone.onStable.subscribe(() => {
-
       console.log(`time to stabilize = ${performance.now() - t1}ms`);
     });
 

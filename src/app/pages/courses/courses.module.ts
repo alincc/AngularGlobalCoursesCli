@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {CourseComponent} from './course/course.component';
 import {CoursesComponent} from './courses.component';
 import {ToolboxComponent} from './toolbox/toolbox.component';
@@ -7,25 +7,30 @@ import {CourseActionsComponent} from './course/course-actions/course-actions.com
 import {CoursesService} from './courses.service';
 import {FormsModule} from '@angular/forms';
 import {CourseDescriptionComponent} from './course/course-description/course-description.component';
+import {CoreModule} from '../../core/core.module';
+import {NoCoursesComponent} from './no-courses/no-courses.component';
 
 const components = [
   CoursesComponent,
   CourseComponent,
   ToolboxComponent,
   CourseActionsComponent,
-  CourseDescriptionComponent
+  CourseDescriptionComponent,
+  NoCoursesComponent
 ];
 
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ],
   declarations: components,
   exports: [CoursesComponent],
   providers: [
-    CoursesService
+    CoursesService,
   ]
 })
-export class CoursesModule { }
+export class CoursesModule {
+}

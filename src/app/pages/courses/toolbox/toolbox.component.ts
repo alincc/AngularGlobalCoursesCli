@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'agc-toolbox',
@@ -10,14 +10,13 @@ export class ToolboxComponent implements OnInit {
 
   public searchValue: string;
 
+  @Output()
+  public find = new EventEmitter<string>()
+
   constructor() {
   }
 
   ngOnInit() {
-  }
-
-  find() {
-    console.log(this.searchValue);
   }
 
 }

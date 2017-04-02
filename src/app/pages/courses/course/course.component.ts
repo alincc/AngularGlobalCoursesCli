@@ -20,7 +20,7 @@ export class CourseComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCourseDelete(id: number) {
+  onCourseDelete(id: string) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

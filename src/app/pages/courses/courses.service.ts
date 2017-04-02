@@ -43,7 +43,7 @@ export class CoursesService {
     this._courses.next(courses);
   }
 
-  public removeCourse(courseId: number): void {
+  public removeCourse(courseId: string): void {
     this.loaderBlockService.show();
     const courses = this._courses.getValue();
     pullAllBy(courses, [{id: courseId}], 'id');

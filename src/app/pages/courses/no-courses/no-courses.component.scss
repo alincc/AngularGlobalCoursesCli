@@ -1,0 +1,8 @@
+@import "../../../../assets/styles/variables";
+
+:host {
+  @include plate;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}

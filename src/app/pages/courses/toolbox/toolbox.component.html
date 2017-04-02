@@ -1,3 +1,3 @@
 <input class="search-field" [(ngModel)]="searchValue" type="text">
-<button class="search-btn" (click)="find()">Find</button>
+<button class="search-btn" (click)="find.emit(searchValue)">Find</button>
 <button class="add-course-btn">Add course</button>
