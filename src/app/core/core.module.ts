@@ -16,12 +16,14 @@ import 'hammerjs';
 import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPublishDatePipe } from './pipes/order-by-publish-date.pipe';
 import { AsyncFilterByPipe } from './pipes/async-filter-by.pipe';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     Ng2Webstorage,
     MaterialModule,
+    FormsModule,
   ],
   providers: [
     AuthorizationService,
@@ -45,6 +47,7 @@ import { AsyncFilterByPipe } from './pipes/async-filter-by.pipe';
   ],
   exports: [
     MaterialModule,
+    FormsModule,
     HeaderComponent,
     FooterComponent,
     LoaderBlockComponent,

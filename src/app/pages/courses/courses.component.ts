@@ -2,7 +2,7 @@ import {Course} from '../../core/entities/Course';
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CoursesService} from './courses.service';
 import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'agc-courses',

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "target": "es5",
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -10,5 +11,6 @@
     "lib": [
       "es2016", "dom"
     ]
-  }
+  },
+  "plugins":[{"name":"@angular/language-service"}]
 }

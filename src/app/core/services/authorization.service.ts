@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {LoaderBlockService} from '../components/loader-block/loader-block.service';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class AuthorizationService {
 
-  private user = new BehaviorSubject<string>('');
+  private user = new ReplaySubject<string>(2);
 
   constructor(private loaderBlockService: LoaderBlockService) {
     const user = localStorage.getItem('user');

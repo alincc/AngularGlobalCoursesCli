@@ -2,6 +2,7 @@ import {ChangeDetectorRef, OnDestroy, Pipe, PipeTransform, WrappedValue} from '@
 import {Observable} from 'rxjs/Observable';
 import {Course} from '../entities/Course';
 import {Subscription} from 'rxjs/Subscription';
+import 'rxjs/add/observable/combineLatest';
 
 @Pipe({
   name: 'asyncFilterBy', pure: false

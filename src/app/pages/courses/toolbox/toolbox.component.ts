@@ -11,7 +11,7 @@ export class ToolboxComponent implements OnInit {
   public searchValue: string;
 
   @Output()
-  public find = new EventEmitter<string>()
+  public find = new EventEmitter<string>();
 
   constructor() {
   }
