@@ -1,8 +1,8 @@
-export interface Course {
-  id: string;
+export class Course {
+  id: number;
   name: string;
   description: string;
-  publishDate: Date;
-  duration: number;
+  date: Date;
+  length: number;
   topRated: boolean;
 }

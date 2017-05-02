@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {AuthorizationService} from '../../../services/authorization.service';
+import {UserInfo} from '../../../entities/User';
 
 @Component({
   selector: 'agc-auth-panel',
@@ -9,6 +10,9 @@ import {AuthorizationService} from '../../../services/authorization.service';
 })
 export class AuthPanelComponent implements OnInit {
 
+  @Input()
+  public user: UserInfo;
+
   constructor(private authService: AuthorizationService) {
   }
 
@@ -16,7 +20,6 @@ export class AuthPanelComponent implements OnInit {
   }
 
   public logOut() {
-    console.log(this.authService.getUserInfo());
     this.authService.logOut();
   }
 }

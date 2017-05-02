@@ -1,56 +1,91 @@
 import {Injectable} from '@angular/core';
 import {Course} from '../../core/entities/Course';
 
-
-import {uniqueId, find, findIndex, pullAllBy} from 'lodash';
 import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {mockCourses} from '../../core/mock/courses';
 import {LoaderBlockService} from '../../core/components/loader-block/loader-block.service';
+import {Http, URLSearchParams} from '@angular/http';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/debounce';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/concatMap';
 
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CoursesService {
 
-  private _courses: BehaviorSubject<Course[]> = new BehaviorSubject(mockCourses);
+  private searchQuery: BehaviorSubject<string> = new BehaviorSubject('');
+  private page: BehaviorSubject<number> = new BehaviorSubject(0);
+  private pageSize: BehaviorSubject<number> = new BehaviorSubject(3);
 
-  public courses: Observable<Course[]> = this._courses.asObservable();
+  public $courses: Observable<Course[]>;
 
-  constructor(private loaderBlockService: LoaderBlockService) {
+  constructor(private loaderBlockService: LoaderBlockService, private http: Http) {
+
+
+    this.$courses = Observable.combineLatest(
+      this.pageSize,
+      this.searchQuery
+        .map((query: string) => query.trim())
+        .map((query: string) => query && query.length >= 3 ? query : '')
+        .debounce(() => Observable.timer(250)))
+      .do(() => this.loaderBlockService.show())
+      .switchMap(([pageSize, searchQuery]) => this.page
+        .concatMap((_, page) => this.fetchCourses(page, pageSize, searchQuery))
+        .scan((courses, next) => courses.concat(next)))
+      .do(() => this.loaderBlockService.hide())
+      .share();
 
   }
 
-  public getCourses(): Observable<Course[]> {
-    return this.courses;
+  public search(query: string) {
+    this.searchQuery.next(query);
   }
 
-  public createCourse(course: Course): void {
-    const courses = this._courses.getValue();
-    course.id = uniqueId();
-    courses.push(course);
-    this._courses.next(courses);
+  public nextPage() {
+    this.page.next(this.page.value + 1);
   }
 
-  public getCourse(courseId: string) {
-    const courses = this._courses.getValue();
-    return find(courses, {id: courseId});
+  public changePageSize(size: number) {
+    this.pageSize.next(size);
+  }
+
+  public createCourse(course: Course) {
+    this.loaderBlockService.show();
+    return this.http.post(`http://localhost:3004/courses`, course)
+      .do(() => this.loaderBlockService.hide());
+  }
+
+  public getCourse(courseId: number) {
+    return this.http.get(`http://localhost:3004/courses/${courseId}`).map(res => res.json());
   }
 
   public updateCourse(course: Course) {
-    const courses = this._courses.getValue();
-    const index = findIndex(courses, {id: course.id});
-    courses[index] = course;
-    this._courses.next(courses);
+    this.loaderBlockService.show();
+    this.http.put(`http://localhost:3004/courses/${course.id}`, course)
+      .do(() => this.loaderBlockService.hide())
+      .subscribe(() => {
+        this.page.next(this.page.value);
+      });
   }
 
-  public removeCourse(courseId: string): void {
-    this.loaderBlockService.show();
-    const courses = this._courses.getValue();
-    pullAllBy(courses, [{id: courseId}], 'id');
+  public removeCourse(courseId: number): void {
+    this.http.delete(`http://localhost:3004/courses/${courseId}`)
+      .do(() => this.loaderBlockService.show())
+      .subscribe(() => {
+        this.searchQuery.next('');
+      });
+  }
 
-    setTimeout(() => {
-      this._courses.next(courses);
-      this.loaderBlockService.hide();
-    }, 1000);
+  private fetchCourses(page, pageSize, query?: string): Observable<Course[]> {
+    const params = new URLSearchParams();
+    if (query) {
+      params.set('query', query);
+    }
+    params.set('start', page);
+    params.set('count', pageSize);
+    return this.http.get('http://localhost:3004/courses', {search: params}).map(res => res.json());
   }
 }

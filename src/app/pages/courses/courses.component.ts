@@ -2,7 +2,6 @@ import {Course} from '../../core/entities/Course';
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CoursesService} from './courses.service';
 import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'agc-courses',
@@ -13,18 +12,21 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 })
 export class CoursesComponent implements OnInit {
 
-  public courses: Observable<Course[]>;
-  public searchValue = new BehaviorSubject<string>('');
+  public $courses: Observable<Course[]>;
 
 
   constructor(private coursesService: CoursesService) {
   }
 
   ngOnInit() {
-    this.courses = this.coursesService.getCourses();
+    this.$courses = this.coursesService.$courses;
   }
 
-  setSearchValue(value: string) {
-    this.searchValue.next(value);
+  public setSearchValue(value: string) {
+    this.coursesService.search(value);
+  }
+
+  public nextPage() {
+    this.coursesService.nextPage();
   }
 }

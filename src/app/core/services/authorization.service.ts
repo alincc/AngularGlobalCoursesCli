@@ -1,36 +1,41 @@
 import {Injectable} from '@angular/core';
 import {LoaderBlockService} from '../components/loader-block/loader-block.service';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {Login} from '../entities/Login';
+import {UserInfo} from '../entities/User';
+import {Http, Response} from '@angular/http';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthorizationService {
 
-  private user = new ReplaySubject<string>(2);
+  private user = new BehaviorSubject<UserInfo>(null);
 
-  constructor(private loaderBlockService: LoaderBlockService) {
+  constructor(private loaderBlockService: LoaderBlockService, private http: Http) {
     const user = localStorage.getItem('user');
     if (user) {
-      this.user.next(user);
+      try {
+        this.user.next(JSON.parse(user));
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
-  logIn(user: string) {
+  logIn(login: Login) {
     this.loaderBlockService.show();
-    localStorage.setItem('user', user);
-    this.user.next(user);
 
-    setTimeout(() => {
-      this.loaderBlockService.hide();
-    }, 1000);
+    this.http.post('http://localhost:3004/auth/login', login)
+      .subscribe((res: Response) => {
+        const user: UserInfo = res.json();
+        localStorage.setItem('user', JSON.stringify(user));
+        this.user.next(user);
+        this.loaderBlockService.hide();
+      });
   }
 
   logOut() {
     localStorage.removeItem('user');
-    this.user.next('');
-  }
-
-  public isAuthenticated() {
-    return this.user.asObservable();
+    this.user.next(null);
   }
 
   public getUserInfo() {

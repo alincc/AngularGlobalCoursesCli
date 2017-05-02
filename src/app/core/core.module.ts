@@ -13,19 +13,28 @@ import {LoaderBlockComponent} from './components/loader-block/loader-block.compo
 import {LoaderBlockService} from './components/loader-block/loader-block.service';
 import {IsFreshCourseDirective} from './directives/is-fresh-course.directive';
 import 'hammerjs';
-import { DurationPipe } from './pipes/duration.pipe';
-import { OrderByPublishDatePipe } from './pipes/order-by-publish-date.pipe';
-import { AsyncFilterByPipe } from './pipes/async-filter-by.pipe';
-import {FormsModule} from '@angular/forms';
+import {DurationPipe} from './pipes/duration.pipe';
+import {OrderByPublishDatePipe} from './pipes/order-by-publish-date.pipe';
+import {AsyncFilterByPipe} from './pipes/async-filter-by.pipe';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpModule, RequestOptions} from '@angular/http';
+import {AuthRequestOptions} from './services/AuthRequestOptions';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
+    BrowserModule,
+    HttpModule,
     CommonModule,
     Ng2Webstorage,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
+    {provide: RequestOptions, useClass: AuthRequestOptions},
     AuthorizationService,
     LoaderBlockService,
   ],
@@ -48,6 +57,7 @@ import {FormsModule} from '@angular/forms';
   exports: [
     MaterialModule,
     FormsModule,
+    HttpModule,
     HeaderComponent,
     FooterComponent,
     LoaderBlockComponent,
@@ -55,7 +65,8 @@ import {FormsModule} from '@angular/forms';
     DurationPipe,
     AsyncFilterByPipe,
     OrderByPublishDatePipe,
-  ]
+  ],
+
 
 })
 export class CoreModule {

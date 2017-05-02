@@ -1,4 +1,5 @@
 @import "../../../assets/styles/variables";
+@import "../../../assets/styles/controls/button";
 
 :host {
   flex-grow: 1;
@@ -6,6 +7,12 @@
   .courses-container {
     display: flex;
     flex-direction: column;
+  }
+
+  .load-more-btn {
+    @include button;
+
+    margin: 0 0.3em;
   }
 
   agc-course.top-rated {

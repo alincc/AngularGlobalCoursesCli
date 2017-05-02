@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.authService.logIn(this.username);
+    this.authService.logIn({login: this.username, password: this.password});
   }
 
 }

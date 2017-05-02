@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../../services/authorization.service';
+import {UserInfo} from '../../entities/User';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agc-header',
@@ -9,13 +11,13 @@ import {AuthorizationService} from '../../services/authorization.service';
 })
 export class HeaderComponent implements OnInit {
 
-  public user;
+  public $user: Observable<UserInfo>;
 
   constructor(private authService: AuthorizationService) {
   }
 
   ngOnInit() {
-    this.user = this.authService.isAuthenticated();
+    this.$user = this.authService.getUserInfo();
   }
 
 }

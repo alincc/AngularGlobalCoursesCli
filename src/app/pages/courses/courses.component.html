@@ -1,6 +1,7 @@
 <agc-toolbox (find)="setSearchValue($event)"></agc-toolbox>
 <div class="courses-container">
-    <agc-course *ngFor="let course of courses | asyncFilterBy:searchValue | orderByPublishDate" [course]="course"
-                [ngClass]="{'top-rated': course.topRated}" [agcIsFreshCourse]="course.publishDate"></agc-course>
-    <agc-no-courses *ngIf="!(courses | asyncFilterBy:searchValue)?.length"></agc-no-courses>
+    <agc-course *ngFor="let course of $courses | async" [course]="course"
+                [ngClass]="{'top-rated': course.topRated}" [agcIsFreshCourse]="course.date"></agc-course>
+    <agc-no-courses *ngIf="!($courses | async)?.length"></agc-no-courses>
+    <button class="load-more-btn" (click)="nextPage()">Load More</button>
 </div>

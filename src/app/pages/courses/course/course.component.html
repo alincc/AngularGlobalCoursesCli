@@ -1,9 +1,9 @@
 <div class="info">
     <div class="header">
         <h3 class="title">{{course.name | uppercase}}</h3>
-        <h5 class="duration">{{course.duration | duration}}</h5>
+        <h5 class="duration">{{course.length | duration}}</h5>
         <md-icon *ngIf="course.topRated">star_rate</md-icon>
-        <h6 class="publish-date">{{course.publishDate | date}}</h6>
+        <h6 class="publish-date">{{course.date | date}}</h6>
     </div>
     <div class="description">
         <agc-course-description>
