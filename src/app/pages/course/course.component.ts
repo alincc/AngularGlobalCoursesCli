@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'agc-course',
@@ -8,7 +9,24 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 })
 export class CourseComponent implements OnInit {
 
-  constructor() { }
+  public courseForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
+
+    this.courseForm = this.formBuilder.group({
+      name: ['', Validators.maxLength(50)],
+      description: ['', Validators.maxLength(500)],
+      date: '',
+      length: [0],
+      authors: [[]]
+    });
+
+
+  }
+
+  addCourse() {
+    console.log(this.courseForm.value)
+  }
 
   ngOnInit() {
   }

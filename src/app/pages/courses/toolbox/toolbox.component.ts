@@ -8,8 +8,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '
 })
 export class ToolboxComponent implements OnInit {
 
-  public searchValue: string;
-
   @Output()
   public find = new EventEmitter<string>();
 

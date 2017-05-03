@@ -5,8 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DurationPipe implements PipeTransform {
 
-  transform(minutes: number): string {
-    if (!minutes || Number.isNaN(minutes)) {
+  transform(minutes): string {
+    minutes = parseInt(minutes);
+    if (Number.isNaN(minutes)) {
       return '';
     }
 

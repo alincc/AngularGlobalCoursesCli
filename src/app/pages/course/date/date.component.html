@@ -1,3 +1,4 @@
 <md-input-container class="date">
-  <input type="date" [(ngModel)]="date" mdInput placeholder="Date">
+  <input mdInput (change)="setValue($event)" [value]="rawDate" placeholder="Date" [formControl]="formControl">
+  <md-error>Date format should be dd/MM/yyyy</md-error>
 </md-input-container>

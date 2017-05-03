@@ -1,15 +1,17 @@
-<form>
+<form [formGroup]="courseForm" (ngSubmit)="addCourse()">
     <md-input-container>
-        <input mdInput placeholder="Title">
+        <input mdInput placeholder="Title" formControlName="name">
+        <md-error>Max length 50ch</md-error>
     </md-input-container>
-
     <md-input-container>
-        <textarea mdInput placeholder="Description"></textarea>
+        <textarea mdInput placeholder="Description" formControlName="description"></textarea>
+        <md-error>Max length 500ch</md-error>
     </md-input-container>
-    <agc-date></agc-date>
-    <agc-duration></agc-duration>
+    <agc-date formControlName="date"></agc-date>
+    <agc-duration formControlName="length"></agc-duration>
+    <agc-authors formControlName="authors"></agc-authors>
     <div class="actions">
-        <button md-raised-button>Save</button>
+        <button md-raised-button type="submit" [disabled]="!courseForm.valid">Save</button>
         <button md-raised-button>Cancel</button>
     </div>
 </form>

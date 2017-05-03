@@ -8,25 +8,11 @@
   align-items: center;
   flex-grow: 2;
 
-  > div {
+  > form {
     display: flex;
     flex-direction: column;
     max-width: 20em;
   }
 
-  input {
-    border: none;
-    border-bottom: solid $secondary-text-color;
-    outline: none;
-    margin-bottom: 1em;
 
-    &:focus {
-      border-bottom-color: $primary-color;
-    }
-  }
-
-  button {
-    @include button;
-    max-width: 20em;
-  }
 }

@@ -29,7 +29,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CommonModule,
     Ng2Webstorage,
     MaterialModule,
-    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
@@ -56,12 +55,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   exports: [
     MaterialModule,
-    FormsModule,
     HttpModule,
     HeaderComponent,
     FooterComponent,
     LoaderBlockComponent,
     IsFreshCourseDirective,
+    ReactiveFormsModule,
     DurationPipe,
     AsyncFilterByPipe,
     OrderByPublishDatePipe,

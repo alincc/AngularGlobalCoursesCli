@@ -1,4 +1,5 @@
 <md-input-container>
-  <input type="number" mdInput [(ngModel)]="duration" min="0" placeholder="Duration">
+    <input mdInput [value]="length" (keyup)="setValue($event)" placeholder="Duration" [formControl]="formControl">
+    <md-error>Only digits allowed</md-error>
 </md-input-container>
-{{duration | duration}}
+{{length | duration}}

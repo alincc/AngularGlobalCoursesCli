@@ -1,0 +1,11 @@
+:host {
+  max-height: 10em;
+  overflow-y: scroll;
+  margin-bottom: 1em;
+
+  .author-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.3em;
+  }
+}

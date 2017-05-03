@@ -4,6 +4,8 @@ import {CourseComponent} from './course.component';
 import {CoreModule} from '../../core/core.module';
 import { DurationComponent } from './duration/duration.component';
 import { DateComponent } from './date/date.component';
+import { AuthorsComponent } from './authors/authors.component';
+import {AuthorsService} from './authors/authors.service';
 
 @NgModule({
   imports: [
@@ -13,10 +15,14 @@ import { DateComponent } from './date/date.component';
   declarations: [
     CourseComponent,
     DurationComponent,
-    DateComponent
+    DateComponent,
+    AuthorsComponent
   ],
   exports: [
     CourseComponent
+  ],
+  providers: [
+    AuthorsService
   ]
 })
 export class CourseModule {
