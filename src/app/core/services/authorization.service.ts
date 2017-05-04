@@ -4,6 +4,7 @@ import {Login} from '../entities/Login';
 import {UserInfo} from '../entities/User';
 import {Http, Response} from '@angular/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AuthorizationService {
@@ -24,11 +25,18 @@ export class AuthorizationService {
   logIn(login: Login) {
     this.loaderBlockService.show();
 
-    this.http.post('http://localhost:3004/auth/login', login)
-      .subscribe((res: Response) => {
-        const user: UserInfo = res.json();
-        localStorage.setItem('user', JSON.stringify(user));
-        this.user.next(user);
+    return this.http.post('http://localhost:3004/auth/login', login)
+      .map((r: Response) => {
+        if (r.status === 200) {
+          const user: UserInfo = r.json();
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user.next(user);
+          return this.http.get('http://localhost:3004/auth/userinfo')
+        } else if (r.status === 401) {
+          return Observable.throw('wrong username or password!')
+        }
+      })
+      .do(() => {
         this.loaderBlockService.hide();
       });
   }

@@ -21,6 +21,7 @@ import {HttpModule, RequestOptions} from '@angular/http';
 import {AuthRequestOptions} from './services/AuthRequestOptions';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {UnauthorizedGuardService} from './services/unauthorized-guard.service';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     {provide: RequestOptions, useClass: AuthRequestOptions},
     AuthorizationService,
     LoaderBlockService,
+    UnauthorizedGuardService
   ],
   declarations: [
     HeaderComponent,

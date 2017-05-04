@@ -30,7 +30,8 @@ export class CoursesService {
       this.searchQuery
         .map((query: string) => query.trim())
         .map((query: string) => query && query.length >= 3 ? query : '')
-        .debounce(() => Observable.timer(250)))
+        .debounce(() => Observable.timer(250))
+    )
       .do(() => this.loaderBlockService.show())
       .switchMap(([pageSize, searchQuery]) => this.page
         .concatMap((_, page) => this.fetchCourses(page, pageSize, searchQuery))
