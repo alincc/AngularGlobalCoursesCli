@@ -26,7 +26,7 @@ export class AuthorizationService {
     this.loaderBlockService.show();
 
     return this.http.post('http://localhost:3004/auth/login', login)
-      .map((r: Response) => {
+      .switchMap((r: Response) => {
         if (r.status === 200) {
           const user: UserInfo = r.json();
           localStorage.setItem('user', JSON.stringify(user));
@@ -36,7 +36,7 @@ export class AuthorizationService {
           return Observable.throw('wrong username or password!')
         }
       })
-      .do(() => {
+      .finally(() => {
         this.loaderBlockService.hide();
       });
   }
@@ -44,6 +44,10 @@ export class AuthorizationService {
   logOut() {
     localStorage.removeItem('user');
     this.user.next(null);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.user.map(u => !!u);
   }
 
   public getUserInfo() {

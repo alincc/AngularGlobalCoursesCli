@@ -2,4 +2,11 @@
   display: flex;
   align-items: center;
   font-size: 2rem;
+
+  .courses {
+    display: none;
+    &.courses-active {
+      display: inline;
+    }
+  }
 }

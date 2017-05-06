@@ -59,17 +59,15 @@ export class CoursesService {
       .do(() => this.loaderBlockService.hide());
   }
 
-  public getCourse(courseId: number) {
+  public getCourse(courseId: number): Observable<Course> {
     return this.http.get(`http://localhost:3004/courses/${courseId}`).map(res => res.json());
   }
 
   public updateCourse(course: Course) {
     this.loaderBlockService.show();
-    this.http.put(`http://localhost:3004/courses/${course.id}`, course)
+    return this.http.put(`http://localhost:3004/courses/${course.id}`, course)
       .do(() => this.loaderBlockService.hide())
-      .subscribe(() => {
-        this.page.next(this.page.value);
-      });
+      .do(() => this.searchQuery.next(''));
   }
 
   public removeCourse(courseId: number): void {
