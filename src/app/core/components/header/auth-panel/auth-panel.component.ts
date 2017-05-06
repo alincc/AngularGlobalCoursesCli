@@ -19,7 +19,8 @@ export class AuthPanelComponent implements OnInit {
   ngOnInit() {
   }
 
-  public logOut() {
+  public
+  logOut() {
     this.authService.logOut();
   }
 }

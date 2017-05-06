@@ -30,7 +30,8 @@ export class CoursesService {
       this.searchQuery
         .map((query: string) => query.trim())
         .map((query: string) => query && query.length >= 3 ? query : '')
-        .debounce(() => Observable.timer(250)))
+        .debounce(() => Observable.timer(250))
+    )
       .do(() => this.loaderBlockService.show())
       .switchMap(([pageSize, searchQuery]) => this.page
         .concatMap((_, page) => this.fetchCourses(page, pageSize, searchQuery))
@@ -58,17 +59,15 @@ export class CoursesService {
       .do(() => this.loaderBlockService.hide());
   }
 
-  public getCourse(courseId: number) {
+  public getCourse(courseId: number): Observable<Course> {
     return this.http.get(`http://localhost:3004/courses/${courseId}`).map(res => res.json());
   }
 
   public updateCourse(course: Course) {
     this.loaderBlockService.show();
-    this.http.put(`http://localhost:3004/courses/${course.id}`, course)
+    return this.http.put(`http://localhost:3004/courses/${course.id}`, course)
       .do(() => this.loaderBlockService.hide())
-      .subscribe(() => {
-        this.page.next(this.page.value);
-      });
+      .do(() => this.searchQuery.next(''));
   }
 
   public removeCourse(courseId: number): void {

@@ -1,1 +1,1 @@
-<span>Courses</span>
+<a class="courses" routerLink="/courses" routerLinkActive="courses-active">Courses </a> <span *ngIf="courseId$ | async as courseId"> > course: {{courseId}}</span>

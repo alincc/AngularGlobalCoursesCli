@@ -16,16 +16,19 @@ import 'hammerjs';
 import {DurationPipe} from './pipes/duration.pipe';
 import {OrderByPublishDatePipe} from './pipes/order-by-publish-date.pipe';
 import {AsyncFilterByPipe} from './pipes/async-filter-by.pipe';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions} from '@angular/http';
 import {AuthRequestOptions} from './services/AuthRequestOptions';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {UnauthorizedGuardService} from './services/unauthorized-guard.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
+    RouterModule,
     CommonModule,
     Ng2Webstorage,
     MaterialModule,
@@ -36,6 +39,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     {provide: RequestOptions, useClass: AuthRequestOptions},
     AuthorizationService,
     LoaderBlockService,
+    UnauthorizedGuardService
   ],
   declarations: [
     HeaderComponent,
@@ -59,6 +63,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HeaderComponent,
     FooterComponent,
     LoaderBlockComponent,
+    RouterModule,
     IsFreshCourseDirective,
     ReactiveFormsModule,
     DurationPipe,

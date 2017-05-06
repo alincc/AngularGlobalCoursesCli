@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input} from '@angular/core';
 
 @Component({
   selector: 'agc-course-actions',
@@ -10,6 +10,9 @@ export class CourseActionsComponent implements OnInit {
 
   @Output()
   deleteCourse = new EventEmitter<void>();
+
+  @Input()
+  courseId: number;
 
   constructor() { }
 
