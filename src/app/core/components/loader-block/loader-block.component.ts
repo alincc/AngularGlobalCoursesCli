@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoaderBlockService} from './loader-block.service';
+import {AppState} from '../../reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agc-loader-block',
@@ -8,13 +10,13 @@ import {LoaderBlockService} from './loader-block.service';
 })
 export class LoaderBlockComponent implements OnInit {
 
-  public visible;
+  public visible$: Observable<boolean>;
 
-  constructor(private loaderBlockService: LoaderBlockService) {
+  constructor(private store: Store<AppState>) {
   }
 
   ngOnInit() {
-    this.visible = this.loaderBlockService.visible;
+    this.visible$ = this.store.select(state => state.loader.show);
   }
 
 }

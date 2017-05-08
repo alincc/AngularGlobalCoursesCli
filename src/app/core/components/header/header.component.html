@@ -1,4 +1,4 @@
 <agc-logo></agc-logo>
 <agc-navigation></agc-navigation>
-<agc-auth-panel *ngIf="$user | async as user" [user]="user"></agc-auth-panel>
+<agc-auth-panel *ngIf="(auth$ | async).user as user" [user]="user"></agc-auth-panel>
 

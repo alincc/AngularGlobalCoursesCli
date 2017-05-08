@@ -1,5 +1,5 @@
 <div>
-  <div class="author-item" *ngFor="let author of authors | async">
+  <div class="author-item" *ngFor="let author of authors$ | async">
     <md-checkbox [checked]="selectedAuthors[author.id]" (change)="onAuthorSelect($event, author)"></md-checkbox>
     <span>
       {{author.firstName}}, {{author.lastName}}

@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {AuthorizationService} from '../../../services/authorization.service';
 import {UserInfo} from '../../../entities/User';
+import {AppState} from '../../../reducers/index';
+import {Store} from '@ngrx/store';
+import {AuthActions} from '../../../actions/auth';
 
 @Component({
   selector: 'agc-auth-panel',
@@ -13,14 +15,14 @@ export class AuthPanelComponent implements OnInit {
   @Input()
   public user: UserInfo;
 
-  constructor(private authService: AuthorizationService) {
+  constructor(private store: Store<AppState>,
+              private authActions: AuthActions) {
   }
 
   ngOnInit() {
   }
 
-  public
-  logOut() {
-    this.authService.logOut();
+  public logOut() {
+    this.store.dispatch(this.authActions.logOut());
   }
 }

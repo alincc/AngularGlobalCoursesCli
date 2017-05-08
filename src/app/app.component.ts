@@ -1,4 +1,7 @@
-import {ChangeDetectionStrategy, Component, NgZone} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgZone, OnInit} from '@angular/core';
+import {AuthActions} from './core/actions/auth';
+import {AppState} from './core/reducers/index';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'agc-root',
@@ -6,9 +9,10 @@ import {ChangeDetectionStrategy, Component, NgZone} from '@angular/core';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-
-  constructor(private ngZone: NgZone) {
+export class AppComponent implements OnInit{
+  constructor(private ngZone: NgZone,
+              private store: Store<AppState>,
+              private authActions: AuthActions) {
 
     let t1;
 
@@ -21,7 +25,10 @@ export class AppComponent {
       // console.log(`time to stabilize = ${performance.now() - t1}ms`);
     });
 
+  }
 
+  ngOnInit(): void {
+    this.store.dispatch(this.authActions.init());
   }
 
 }

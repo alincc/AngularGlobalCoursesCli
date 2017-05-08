@@ -1,9 +1,11 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Author} from '../../../core/entities/Author';
-import {AuthorsService} from './authors.service';
 import {AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator} from '@angular/forms';
 import {MdCheckboxChange} from '@angular/material';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../core/reducers/index';
+import {AuthorsActions} from '../../../core/actions/authors';
 
 @Component({
   selector: 'agc-authors',
@@ -17,10 +19,10 @@ import {MdCheckboxChange} from '@angular/material';
 export class AuthorsComponent implements OnInit, ControlValueAccessor, Validator {
   private propagateChange: Function;
 
-  public authors: Observable<Author[]>;
+  public authors$: Observable<Author[]>;
   public selectedAuthors: Author[];
 
-  constructor(private authorsService: AuthorsService) {
+  constructor(private store: Store<AppState>, private authorsActions: AuthorsActions) {
   }
 
   onAuthorSelect(checkbox: MdCheckboxChange, author: Author) {
@@ -34,7 +36,7 @@ export class AuthorsComponent implements OnInit, ControlValueAccessor, Validator
 
   writeValue(authors: Author[]): void {
     this.selectedAuthors = [];
-    authors.forEach(a => this.selectedAuthors[a.id] = a)
+    authors.forEach(a => this.selectedAuthors[a.id] = a);
   }
 
   registerOnChange(fn: Function): void {
@@ -50,7 +52,8 @@ export class AuthorsComponent implements OnInit, ControlValueAccessor, Validator
   }
 
   ngOnInit() {
-    this.authors = this.authorsService.getAuthors();
+    this.authors$ = this.store.select(state => state.authors.authors);
+    this.store.dispatch(this.authorsActions.loadAuthors());
   }
 
 }

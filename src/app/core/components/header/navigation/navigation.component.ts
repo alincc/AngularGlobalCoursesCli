@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router, Event, ActivatedRoute} from '@angular/router';
-import 'rxjs/add/operator/merge'
+import 'rxjs/add/operator/merge';
 import {Observable} from 'rxjs/Observable';
 
 
@@ -23,7 +23,7 @@ export class NavigationComponent implements OnInit {
       .filter((e: Event) => e instanceof NavigationEnd)
       .switchMap(() => this.route.children)
       .switchMap(a => a.params)
-      .map(p => p['id'])
+      .map(p => p['id']);
 
 
   }

@@ -10,7 +10,6 @@ import {LogoComponent} from './components/header/logo/logo.component';
 import {NavigationComponent} from './components/header/navigation/navigation.component';
 import {AuthPanelComponent} from './components/header/auth-panel/auth-panel.component';
 import {LoaderBlockComponent} from './components/loader-block/loader-block.component';
-import {LoaderBlockService} from './components/loader-block/loader-block.service';
 import {IsFreshCourseDirective} from './directives/is-fresh-course.directive';
 import 'hammerjs';
 import {DurationPipe} from './pipes/duration.pipe';
@@ -24,6 +23,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UnauthorizedGuardService} from './services/unauthorized-guard.service';
 import {RouterModule} from '@angular/router';
 
+import {AuthorsService} from '../pages/course/authors/authors.service';
+import {CoursesActions} from './actions/courses';
+import {AuthActions} from './actions/auth';
+import {AuthorsActions} from './actions/authors';
+import {LoaderActions} from './actions/loader';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -33,13 +38,19 @@ import {RouterModule} from '@angular/router';
     Ng2Webstorage,
     MaterialModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
   providers: [
     {provide: RequestOptions, useClass: AuthRequestOptions},
     AuthorizationService,
-    LoaderBlockService,
-    UnauthorizedGuardService
+    UnauthorizedGuardService,
+    AuthorsService,
+    CoursesActions,
+    AuthActions,
+    AuthorsActions,
+    LoaderActions
+
   ],
   declarations: [
     HeaderComponent,

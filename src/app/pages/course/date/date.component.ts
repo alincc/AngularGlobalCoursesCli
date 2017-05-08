@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl} from '@angular/forms';
-import {until} from 'selenium-webdriver';
-import titleMatches = until.titleMatches;
 
 @Component({
   selector: 'agc-date',
@@ -19,7 +17,7 @@ export class DateComponent implements OnInit, ControlValueAccessor, Validator {
   private propagateChange: Function;
   private date: Date;
 
-  public rawDate: string = '';
+  public rawDate = '';
   public formControl: FormControl;
 
   validate(c: FormControl): { [key: string]: any; } {
@@ -29,7 +27,7 @@ export class DateComponent implements OnInit, ControlValueAccessor, Validator {
 
   writeValue(date?): void {
     const timestamp = Date.parse(date);
-    if(!Number.isNaN(timestamp)) {
+    if (!Number.isNaN(timestamp)) {
       this.date = new Date(timestamp);
       this.rawDate = `${this.date.getDate()}/${this.date.getMonth() + 1}/${this.date.getFullYear()}`;
     }

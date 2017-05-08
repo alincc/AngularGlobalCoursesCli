@@ -3,6 +3,9 @@ import {Course} from '../../../core/entities/Course';
 import {CoursesService} from '../courses.service';
 import {MdDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../../core/components/confiramation-dialog/confirmation-dialog.component';
+import {CoursesActions} from '../../../core/actions/courses';
+import {AppState} from '../../../core/reducers/index';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'agc-course',
@@ -14,7 +17,9 @@ export class CourseComponent implements OnInit {
 
   @Input() course: Course;
 
-  constructor(private coursesService: CoursesService, private dialog: MdDialog) {
+  constructor(private store: Store<AppState>,
+              private coursesActions: CoursesActions,
+              private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -24,7 +29,8 @@ export class CourseComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.coursesService.removeCourse(id);
+        this.store.dispatch(this.coursesActions.deleteCourse(id));
+
       }
     });
   }

@@ -1,9 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CoursesService} from '../courses/courses.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Course} from '../../core/entities/Course';
-import {Observable} from 'rxjs/Observable';
+import {CoursesActions} from '../../core/actions/courses';
+import {AppState} from '../../core/reducers/index';
+import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'agc-course',
@@ -11,25 +14,37 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CourseComponent implements OnInit {
-
+export class CourseComponent implements OnInit, OnDestroy {
   public courseForm: FormGroup;
+
+  private courseSubscription: Subscription;
+
+  private routerSubscription: Subscription;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
+              private coursesActions: CoursesActions,
+              private store: Store<AppState>,
               private coursesService: CoursesService) {
   }
 
   addCourse() {
     console.log(this.courseForm.value);
-    Observable.if(() => this.courseForm.value['id'],
-      this.coursesService.updateCourse(this.courseForm.value),
-      this.coursesService.createCourse(this.courseForm.value)
-    ).subscribe(() => this.router.navigate(['/courses']))
+    if (this.courseForm.value['id']) {
+      this.store.dispatch(this.coursesActions.saveCourse(this.courseForm.value))
+    } else {
+      this.store.dispatch(this.coursesActions.addCourse(this.courseForm.value))
+    }
   }
 
   ngOnInit() {
+    this.courseSubscription = this.store.select(state => state.course)
+      .subscribe((course: Course) => {
+        this.courseForm.setValue(course);
+      });
+
+
     this.courseForm = this.formBuilder.group({
       id: [null],
       isTopRated: [false],
@@ -40,12 +55,15 @@ export class CourseComponent implements OnInit {
       authors: [[]]
     });
 
-    this.route.params
+    this.routerSubscription = this.route.params
       .map((params: Params) => params['id'])
       .filter((courseId => courseId && courseId !== 'new'))
-      .switchMap((courseId: number) => this.coursesService.getCourse(courseId))
-      .subscribe((course: Course) => {
-        this.courseForm.setValue(course)
-      });
+      .do((courseId: number) => this.store.dispatch(this.coursesActions.getCourse(courseId)))
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.courseSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe()
   }
 }

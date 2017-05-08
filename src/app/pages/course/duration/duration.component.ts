@@ -30,9 +30,9 @@ export class DurationComponent implements OnInit, ControlValueAccessor, Validato
     this.length = input.target.value;
 
     if (/^\d+$/.test(this.length)) {
-      this.propagateChange(parseInt(this.length))
+      this.propagateChange(parseInt(this.length));
     } else {
-      this.propagateChange(this.length)
+      this.propagateChange(this.length);
     }
   }
 
